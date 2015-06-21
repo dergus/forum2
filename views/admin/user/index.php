@@ -48,17 +48,19 @@ $this->params['breadcrumbs'][] = $this->title;
                  
                 }
             ],
-            // 'last_visit',
-            // 'total_time',
+             'last_visit:datetime',
+             [
+               'attribute'=>'total_time',
+               'content'=>  function ($model){
+                return gmdate("H:i:s", $model->total_time);
+               }
+               ],
              'email:email',
-            // 'created_at',
-            // 'updated_at',
-            // 'auth_key',
-            // 'password_reset_token',
+             'created_at:datetime',
             // 'status',
 
             ['class' => 'yii\grid\ActionColumn',
-                'header'=>'Actions'],
+             'header'=>'Actions'],
         ],
     ]); ?>
 

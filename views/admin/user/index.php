@@ -31,26 +31,34 @@ $this->params['breadcrumbs'][] = $this->title;
              'content'=>  function($model){
               return $model->sex==0?'female':'male';  
              },
-              'value'=>  function ($model){
-                  return intval($model->sex);
-              },
-              'label'=>'Sex',
-               'enableSorting'=>TRUE       
-                      
+                     
+            ],
+            [
+                'attribute'=>'rank',
+                'content'=>  function ($model){
+                 if($model->rank==4){
+                     return 'User';
+                 }elseif ($model->rank==3) {
+                     return 'Moderator'; 
+                 }elseif ($model->rank==2) {
+                     return 'Administrator';
+                }elseif ($model->rank==1) {
+                    return 'Creator';
+                }
+                 
+                }
             ],
             // 'last_visit',
             // 'total_time',
              'email:email',
-            // 'rank',
             // 'created_at',
-            // 'last_watch',
-            // 'timezone',
             // 'updated_at',
             // 'auth_key',
             // 'password_reset_token',
             // 'status',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'header'=>'Actions'],
         ],
     ]); ?>
 

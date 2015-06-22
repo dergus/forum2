@@ -161,10 +161,10 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
-        $model = new SignupForm();
+        $model = new User();
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user, 3600 * 24 * 30)) {
+            if ($model->save()) {
+                if (Yii::$app->getUser()->login($model, 3600 * 24 * 30)) {
                     return $this->goHome();
                 }
             }

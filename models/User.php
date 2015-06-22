@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;
+use yii\helpers\HtmlPurifier;
 /**
  * User model
  *
@@ -27,6 +28,13 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    
+    public $day;
+    public $month;
+    public $year;
+    public $password;
+    public $password_repeat;
+    public $captcha;
 
     /**
      * @inheritdoc
@@ -59,6 +67,50 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            
+            ['username', 'filter', 'filter' => 'trim'],
+            ['username', 'required','on'=>'signup'],
+            ['username', 'unique', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 32,'skipOnEmpty'=>FALSE],
+            
+            ['email', 'filter', 'filter' => 'trim'],
+            ['email', 'required','on'=>'signup'],
+            ['email', 'email','skipOnEmpty'=>FALSE],
+            ['email', 'unique', 'message' => 'This email address has already been taken.'],
+            
+            [['day','month','year'],'required','on'=>'signup'],
+            [['day','month','year'],'integer','skipOnEmpty'=>FALSE],
+            
+            ['password', 'required','on'=>'signup'],
+            ['password', 'string', 'min' => 6],
+            
+            ['password_repeat', 'required','on'=>'signup'],
+            ['password_repeat', 'string', 'min' => 6],
+            
+            ['password','compare'],
+            
+            
+            ['birthdate','filter','filter'=>function()
+        {
+                    return $this->year."-".$this->month."-".$this->day;
+            
+        }   ],
+            ['birthdate','date','format'=>"yyyy-MM-dd"],
+            ['birthdate','required','on'=>'signup'],
+             
+            ['about','string','length'=>[3,300]],
+            ['about','default','value'=>NULL],
+            ['about','filter','filter'=>  function($text)
+            {
+                    return HtmlPurifier::process($text);
+            }],
+            
+            ['sex','required','on'=>'signup'],
+            ['sex','in','range'=>[0,1]],
+            
+            ['captcha','captcha','captchaAction'=>'site/captcha','on'=>'signup'],
+            ['rank','in','range'=>[1,2,3,4]]
+        
         ];
     }
 
@@ -147,6 +199,26 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
+    
+    public function getRankLabels(){
+        return [
+            1=>"Creator",
+            2=>"Administrator",
+            3=>"Moderator",
+            4=>"User"
+        ];
+    }
+
+    
+    public function getDayVal(){
+        return date('d', strtotime($this->birthdate));
+    }
+    public function getMonthVal(){
+        return date('n', strtotime($this->birthdate));
+    }
+    public function getYearVal(){
+        return date('Y', strtotime($this->birthdate));
+    }
 
     /**
      * Validates password
@@ -164,9 +236,9 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword()
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash=Yii::$app->security->generatePasswordHash($this->password);
     }
 
     /**
@@ -217,5 +289,24 @@ class User extends ActiveRecord implements IdentityInterface
             self::STATUS_ACTIVE  => Yii::t('user', 'Active'),
         ];
     }
+    
+    public function beforeSave($insert) {
+    if (parent::beforeSave($insert)) {
+        if($this->password)
+        $this->password_hash=Yii::$app->security->generatePasswordHash($this->password);
+        if($this->isNewRecord){
+        $this->generateAuthKey();
+        $this->rank=4;
+        }
+        
+        
+        return true;
+    } else {
+        return TRUE;
+    }
+       
+    }
+    
+    
 
 }

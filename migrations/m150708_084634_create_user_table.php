@@ -36,9 +36,8 @@ class m150708_084634_create_user_table extends Migration
 
     public function down()
     {
-        echo "m150708_084634_create_user_table cannot be reverted.\n";
+        $this->dropTable('user');
 
-        return false;
     }
     
     /*

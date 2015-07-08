@@ -10,9 +10,10 @@ class UserTime extends Component{
         if(!\Yii::$app->user->isGuest){
             
             $user=User::find()->where(['id'=>  \Yii::$app->user->id])->one();
+            $user->scenario='usertime';
             $last_visit=new \DateTime($user->last_visit);
             $last_visit=$last_visit->getTimestamp();
-            $now=new \DateTime(date("y-m-d H:i:s"));
+            $now=new \DateTime(date("Y-m-d H:i:s"));
             $now=$now->getTimestamp();
             $diff=$now-$last_visit;
             if($diff<600){

@@ -114,6 +114,15 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function scenarios(){
+
+        return array_merge(parent::scenarios(),[
+
+            'usertime'=>['last_visit','total_time']
+
+            ]);
+    }
+
     /**
      * @inheritdoc
      */

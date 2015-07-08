@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Theme */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Themes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Themes'), 'url' => ['index','id'=>$model->forum_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="theme-view">
@@ -31,12 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'forum_id',
             'title',
-            'text:ntext',
             'user_id',
             'create_time',
             'update_time',
-            'locked',
-            'fixed',
+            ['attribute'=>'locked',
+             'value'=>$model->locked==0?'locked':'not locked'
+            ],
+            ['attribute'=>'fixed',
+             'value'=>$model->fixed==0?'fixed':'not fixed'
+            ]
         ],
     ]) ?>
 

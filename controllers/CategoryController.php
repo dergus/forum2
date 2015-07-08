@@ -25,7 +25,7 @@ class CategoryController extends Controller
             ],
         ];
     }
-
+      
     /**
      * Lists all Category models.
      * @return mixed

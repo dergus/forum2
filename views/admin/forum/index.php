@@ -7,6 +7,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Forums');
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category',]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="forum-index">
@@ -24,10 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'category_id',
+            ['attribute'=>'title',
+             'content'=>  function ($model){
+                 return Html::a($model->title, ['admin/theme/index','id'=>$model->id]);
+             }
+             ],
             'position',
-            'title',
             'description',
-
+             ['attribute'=>'locked',
+             'value'=>  function ($model){
+                 return $model->locked==0?"locked":"not locked";
+             }
+                
+                
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

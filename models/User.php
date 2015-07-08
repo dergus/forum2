@@ -290,6 +290,27 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
     
+    public  function getTotalTime(){
+                return gmdate("H:i:s", $this->total_time);
+               }
+
+    public function getUserRank(){
+     if($this->rank==4){
+                     return 'User';
+                 }elseif ($this->rank==3) {
+                     return 'Moderator'; 
+                 }elseif ($this->rank==2) {
+                     return 'Administrator';
+                }elseif ($this->rank==1) {
+                    return 'Creator';
+                }
+                 
+                
+}
+    public function getUserSex(){
+        return $this->sex==0?'female':'male';
+    }
+
     public function beforeSave($insert) {
     if (parent::beforeSave($insert)) {
         if($this->password)

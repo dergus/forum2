@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "message".
@@ -30,6 +31,19 @@ class Message extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
+        public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+                'value' => function(){return date("Y-m-d H:i:s");},
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [

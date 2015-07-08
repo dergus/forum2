@@ -3,8 +3,8 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=forum2',
-    'username' => 'roradmin',
-    'password' => 'rorssap',
+    'username' => 'dbadmin',
+    'password' => 'dbssap',
     'charset' => 'utf8',
     'on afterOpen' => function($event) {
                 // $event->sender refers to the DB connection

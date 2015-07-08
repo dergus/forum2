@@ -7,7 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Forum */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Forums'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category',]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', $model->category->title), 'url' => ['index','id'=>$model->category_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="forum-view">
@@ -34,7 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description',
             'create_time',
-            'locked',
+            ['attribute'=>'locked',
+             'value'=>$model->locked==0?"locked":"not locked"
+                
+                
+            ]
         ],
     ]) ?>
 

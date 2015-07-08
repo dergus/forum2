@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Theme'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Theme'), ['create','id'=>$id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,12 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'forum_id',
             'title',
-            'text:ntext',
             'user_id',
-            // 'create_time',
-            // 'update_time',
-            // 'locked',
-            // 'fixed',
+            ['attribute'=>'locked',
+             'value'=>function($model){ return $model->locked==0?'locked':'not locked';}
+            ],
+            ['attribute'=>'fixed',
+             'value'=>function($model){  return $model->fixed==0? 'fixed': 'not fixed';}
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

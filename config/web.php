@@ -48,6 +48,20 @@ $config = [
             'defaultRoles'=>['admin','moderator','user']
             
         ],
+        'assetManager'=>[
+    
+    'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,   // do not publish the bundle
+                    'js' => [
+                        '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+                    ]
+                ],
+            ],
+    
+    
+    
+],
         
     ],
     'params' => $params,

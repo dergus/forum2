@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "theme".
@@ -24,7 +25,9 @@ class Theme extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
+     * 
      */
+    public $text;
     public static function tableName()
     {
         return 'theme';
@@ -36,11 +39,25 @@ class Theme extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['forum_id', 'text', 'user_id'], 'required'],
-            [['forum_id', 'user_id', 'locked', 'fixed'], 'integer'],
+            [['forum_id'], 'required'],
+            ['forum_id','exist','targetClass'=>'app\models\Forum','targetAttribute'=>'id'],
+            ['text','required','on'=>'create'],
+            [['forum_id', 'locked', 'fixed'], 'integer'],
             [['text'], 'string'],
             [['create_time', 'update_time'], 'safe'],
             [['title'], 'string', 'max' => 200]
+        ];
+    }
+    
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+                'value' => function(){return date("Y-m-d H:i:s");},
+            ],
         ];
     }
 
@@ -76,5 +93,30 @@ class Theme extends \yii\db\ActiveRecord
     public function getForum()
     {
         return $this->hasOne(Forum::className(), ['id' => 'forum_id']);
+    }
+    
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            
+            $this->user_id=\Yii::$app->user->id;
+            return true;
+        } else {
+            return TRUE;
+        }
+       
+    }
+    
+    
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if($insert){
+            $msg=new Message();
+            $msg->theme_id=  $this->id;
+            $msg->author_id=\Yii::$app->user->id;
+            $msg->text=  $this->text;
+            $msg->save();
+            
+        }
+        
     }
 }

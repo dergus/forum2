@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\models\Category;
 /**
  * ForumController implements the CRUD actions for Forum model.
  */
@@ -31,13 +31,16 @@ class ForumController extends Controller
      * @return mixed
      */
     public function actionIndex($id)
-    {
+    {   
         $dataProvider = new ActiveDataProvider([
             'query' => Forum::find()->where(['category_id'=>$id]),
         ]);
+        
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            
+            
         ]);
     }
 
@@ -47,9 +50,10 @@ class ForumController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
+            
         ]);
     }
 
@@ -61,12 +65,15 @@ class ForumController extends Controller
     public function actionCreate()
     {
         $model = new Forum();
-
+        $categories=(new Category())->getAllCategories();
+        $forumsAmount=(new Category())->getCountAllCategories();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'categories'=>$categories,
+                'forumsAmount'=>$forumsAmount
             ]);
         }
     }
@@ -80,12 +87,16 @@ class ForumController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $categories=(new Category())->getAllCategories();
+        $forumsAmount=(new Category())->getCountAllCategories();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'categories'=>$categories,
+                'forumsAmount'=>$forumsAmount
             ]);
         }
     }

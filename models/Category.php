@@ -81,7 +81,39 @@ class Category extends \yii\db\ActiveRecord
         return $this->find()->count();
     }
     
-    public function beforeSave($insert) {
+    public function getCountAllCategories(){
+        
+        $categoriesList=[];
+        
+        $categories=  Category::find()->all();
+        foreach ($categories as $category){
+        
+            
+            $categoriesList+=[$category->id=>$category->countForums];
+            
+        }
+        return $categoriesList;
+        
+        
+    }
+    
+        public function getAllCategories(){
+        
+        $categoriesList=[];
+        
+        $categories=  Category::find()->orderBy("id")->all();
+        foreach ($categories as $category){
+            
+            $categoriesList+=[$category->id=>$category->title];
+            
+        }
+        return $categoriesList;
+        
+        
+    }
+    
+
+        public function beforeSave($insert) {
      if (parent::beforeSave($insert)) {
          if($this->isNewRecord){
 

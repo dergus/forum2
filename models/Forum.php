@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "forum".
@@ -27,6 +28,18 @@ class Forum extends \yii\db\ActiveRecord
     {
         return 'forum';
     }
+    
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => FALSE,
+                'value' => function(){return date("Y-m-d H:i:s");},
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -34,9 +47,8 @@ class Forum extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'position'], 'required'],
+            [['category_id', 'position','locked','title'], 'required'],
             [['category_id', 'position', 'locked'], 'integer'],
-            [['create_time'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['description'], 'string', 'max' => 255]
         ];

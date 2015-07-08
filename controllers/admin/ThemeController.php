@@ -4,6 +4,7 @@ namespace app\controllers\admin;
 
 use Yii;
 use app\models\Theme;
+use app\models\Forum;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,14 +31,15 @@ class ThemeController extends Controller
      * Lists all Theme models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Theme::find(),
+            'query' => Theme::find()->where(['forum_id'=>$id]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'id'=>$id
         ]);
     }
 
@@ -58,7 +60,7 @@ class ThemeController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Theme();
 
@@ -67,6 +69,7 @@ class ThemeController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'id'=>$id
             ]);
         }
     }

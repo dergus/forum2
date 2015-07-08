@@ -35,9 +35,11 @@ class UserController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => User::find(),
         ]);
+        $searchModel=new User();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel'=>$searchModel
             
         ]);
     }

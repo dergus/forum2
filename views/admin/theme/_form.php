@@ -6,27 +6,27 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Theme */
 /* @var $form yii\widgets\ActiveForm */
+if($model->isNewRecord){
+$model->locked=1;
+$model->fixed=1;
+$model->forum_id=$id;}
+
 ?>
+
 
 <div class="theme-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'forum_id')->textInput() ?>
+    <?= $form->field($model, 'forum_id')->hiddenInput()->label(FALSE) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+    <?php if($model->isNewRecord) echo $form->field($model, 'text')->textarea(['rows' => 6]); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'locked')->dropDownList([0=>'locked',1=>'not locked']) ?>
 
-    <?= $form->field($model, 'create_time')->textInput() ?>
-
-    <?= $form->field($model, 'update_time')->textInput() ?>
-
-    <?= $form->field($model, 'locked')->textInput() ?>
-
-    <?= $form->field($model, 'fixed')->textInput() ?>
+    <?= $form->field($model, 'fixed')->dropDownList([0=>'fixed',1=>'not fixed']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

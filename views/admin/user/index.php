@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'filterPosition'=>  GridView::FILTER_POS_HEADER,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -29,22 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
              'birthdate',
             ['attribute'=>'sex',
              'content'=>  function($model){
-              return $model->sex==0?'female':'male';  
+              return $model->getUserSex();  
              },
                      
             ],
             [
                 'attribute'=>'rank',
                 'content'=>  function ($model){
-                 if($model->rank==4){
-                     return 'User';
-                 }elseif ($model->rank==3) {
-                     return 'Moderator'; 
-                 }elseif ($model->rank==2) {
-                     return 'Administrator';
-                }elseif ($model->rank==1) {
-                    return 'Creator';
-                }
+                 return $model->getUserRank();
                  
                 }
             ],
@@ -52,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
              [
                'attribute'=>'total_time',
                'content'=>  function ($model){
-                return gmdate("H:i:s", $model->total_time);
+                return $model->getTotalTime();
                }
                ],
              'email:email',

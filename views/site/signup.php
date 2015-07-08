@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-5">
             <h2>fill out the following form</h2>
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <?= $form->field($model, 'username')?>
+                <?= $form->field($model, 'name')?>
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
                 <?= $form->field($model, 'password_repeat')->passwordInput() ?>

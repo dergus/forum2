@@ -92,7 +92,7 @@ class SiteController extends Controller
               
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
-                        'username' => $attributes['screen_name'],
+                        'name' => $attributes['screen_name'],
                    //     'email' => $email,
                         'password' => $password,
                     ]);

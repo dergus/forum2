@@ -68,10 +68,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required','on'=>'signup'],
-            ['username', 'unique', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 32,'skipOnEmpty'=>FALSE],
+            ['name', 'filter', 'filter' => 'trim'],
+            ['name', 'required','on'=>'signup'],
+            ['name', 'unique', 'message' => 'This username has already been taken.'],
+            ['name', 'string', 'min' => 2, 'max' => 32,'skipOnEmpty'=>FALSE],
             
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required','on'=>'signup'],

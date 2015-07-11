@@ -34,7 +34,6 @@ class Forum extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'create_time',
                 'updatedAtAttribute' => FALSE,
                 'value' => function(){return date("Y-m-d H:i:s");},
             ],

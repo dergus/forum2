@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'position',
             'title',
             'description',
-            'create_time',
+            'created_at',
             ['attribute'=>'locked',
              'value'=>$model->locked==0?"locked":"not locked"
                 

@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'forum_id',
             'title',
             'user_id',
-            'create_time',
-            'update_time',
+            'created_at',
+            'updated_at',
             ['attribute'=>'locked',
              'value'=>$model->locked==0?'locked':'not locked'
             ],

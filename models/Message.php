@@ -37,8 +37,6 @@ class Message extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'create_time',
-                'updatedAtAttribute' => 'update_time',
                 'value' => function(){return date("Y-m-d H:i:s");},
             ],
         ];
@@ -49,7 +47,6 @@ class Message extends \yii\db\ActiveRecord
         return [
             [['theme_id', 'author_id', 'text'], 'required'],
             [['theme_id', 'author_id', 'to_user'], 'integer'],
-            [['create_time'], 'safe'],
             [['text'], 'string']
         ];
     }

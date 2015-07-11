@@ -44,7 +44,6 @@ class Theme extends \yii\db\ActiveRecord
             ['text','required','on'=>'create'],
             [['forum_id', 'locked', 'fixed'], 'integer'],
             [['text'], 'string'],
-            [['create_time', 'update_time'], 'safe'],
             [['title'], 'string', 'max' => 200]
         ];
     }
@@ -54,8 +53,6 @@ class Theme extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'create_time',
-                'updatedAtAttribute' => 'update_time',
                 'value' => function(){return date("Y-m-d H:i:s");},
             ],
         ];
@@ -72,8 +69,8 @@ class Theme extends \yii\db\ActiveRecord
             'title' => 'Title',
             'text' => 'Text',
             'user_id' => 'User ID',
-            'create_time' => 'Create Time',
-            'update_time' => 'Update Time',
+            'created_at' => 'Create Time',
+            'updated_at' => 'Update Time',
             'locked' => 'Locked',
             'fixed' => 'Fixed',
         ];

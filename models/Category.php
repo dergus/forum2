@@ -34,7 +34,6 @@ class Category extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'create_time',
                 'updatedAtAttribute' => FALSE,
                 'value' => function(){return date("Y-m-d H:i:s");},
             ],
@@ -62,7 +61,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'position' => 'Position',
-            'create_time' => 'Create Time',
+            'created_at' => 'Created at',
         ];
     }
 

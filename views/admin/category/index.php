@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
              }
              ],
             'position',
-            'create_time',
+            'created_at',
             [
               'header'=>'forums',
                'content'=>  function ($model){

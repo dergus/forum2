@@ -41,7 +41,7 @@ class ThemeController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'forum'=>$forum
+            'forum'=>$forum,
         ]);
     }
 
@@ -51,9 +51,12 @@ class ThemeController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
+        $forum=Forum::find($id)->with(['category'])->one();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'forum'=>$forum,
         ]);
     }
 
@@ -65,13 +68,14 @@ class ThemeController extends Controller
     public function actionCreate($id)
     {
         $model = new Theme();
+        $forum=Forum::find($id)->with(['category'])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'id'=>$id
+                'forum'=>$forum,
             ]);
         }
     }
@@ -85,12 +89,15 @@ class ThemeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $forum=Forum::find($id)->with(['category'])->one();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'forum'=>$forum,
             ]);
         }
     }

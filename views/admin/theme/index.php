@@ -7,7 +7,9 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Themes');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category/index']];
+$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['admin/forum/index','id'=>$forum->category->id]];
+$this->params['breadcrumbs'][] = $forum->title;
 ?>
 <div class="theme-index">
 

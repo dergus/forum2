@@ -37,9 +37,11 @@ class ThemeController extends Controller
             'query' => Theme::find()->where(['forum_id'=>$id]),
         ]);
 
+        $forum=Forum::find($id)->with(['category'])->one();
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'id'=>$id
+            'forum'=>$forum
         ]);
     }
 

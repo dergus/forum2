@@ -36,10 +36,11 @@ class ForumController extends Controller
             'query' => Forum::find()->where(['category_id'=>$id]),
         ]);
         
-
+        $ctg=Category::findOne($id);
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            
+            'ctg'=>$ctg
             
         ]);
     }

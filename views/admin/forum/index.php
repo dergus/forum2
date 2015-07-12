@@ -6,9 +6,10 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+
 $this->title = Yii::t('app', 'Forums');
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category',]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $ctg->title;
 ?>
 <div class="forum-index">
 

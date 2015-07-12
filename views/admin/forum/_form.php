@@ -4,30 +4,46 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\assets\SelectAsset;
 use app\assets\AppAsset;
-$forumsAmount=  json_encode($forumsAmount); 
-$js="var forumsAmount=".$forumsAmount.";"."function fa(){return forumsAmount};";
-$this->registerJs($js,\yii\web\View::POS_BEGIN);
-SelectAsset::register($this);
-AppAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Forum */
 /* @var $form yii\widgets\ActiveForm */
-?>
-<?php
-$pos=[];
-if(!$model->isNewRecord){
-    
-}
 
-?>
+        $items=[];
+        if($model->isNewRecord){
+        $model->category_id=$ctg->id;
+        $model->position=$ctg->getCountForums()+1;
+        $items=array_combine(range(1, $ctg->getCountForums()+1), range(1, $ctg->getCountForums()+1));
+        }else{
+            $fa=  json_encode($forumsAmount); 
+            $js="var forumsAmount=".$fa.";";
+            $this->registerJs($js,\yii\web\View::POS_BEGIN);
+            $items=array_combine(range(1, $ctg->getCountForums()), range(1, $ctg->getCountForums()));
+
+            SelectAsset::register($this);
+            AppAsset::register($this);
+            
+            
+
+        }
+    
+    ?>
 <div class="forum-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php if($model->isNewRecord):?>
 
-    <?= $form->field($model, 'category_id')->dropDownList($categories,['prompt'=>"Choose a Category"]) ?>
+    <?= $form->field($model, 'category_id')->hiddenInput()->label(FALSE) ?>
 
-    <?= $form->field($model, 'position')->dropDownList(['choose category first'],  $model->isNewRecord?['disabled'=>TRUE]:[]) ?>
+    <?= $form->field($model, 'position')->dropDownList($items) ?>
+
+    <?php else:?>
+    <?= $form->field($model, 'category_id')->dropDownList($categories) ?>
+
+    <?= $form->field($model, 'position')->dropDownList($items) ?>
+    
+
+    <?php endif;?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

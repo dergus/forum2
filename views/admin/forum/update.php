@@ -8,7 +8,8 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Forum',
 ]) . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Forums'), 'url' => ['index','id'=>$model->category_id]];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category/index']];
+$this->params['breadcrumbs'][]=['label'=>$ctg->title,'url'=>['admin/forum/index','id'=>$ctg->id]];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
@@ -19,7 +20,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <?= $this->render('_form', [
         'model' => $model,
         'categories'=>$categories,
-        'forumsAmount'=>$forumsAmount
+        'forumsAmount'=>$forumsAmount,
+        'ctg'=>$ctg
     ]) ?>
 
 </div>

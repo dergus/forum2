@@ -6,7 +6,10 @@ $(function (){
         $("#forum-category_id option:selected").each(function (){
            
             var cid=$(this).val();
-            var times=+forumsAmount[cid]+1;
+            var times=+forumsAmount[cid];
+            if(times==0){
+                times=1;
+            }
             for(var i=1;i<=times;i++){
                
                     html+="<option value="+i+">"+i+"</option>";
@@ -16,7 +19,6 @@ $(function (){
             
             
         });
-        $("#forum-position").removeAttr("disabled");
         $("#forum-position").html(html);
     });
     

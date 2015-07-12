@@ -37,7 +37,7 @@ class ForumController extends Controller
         ]);
         
         $ctg=Category::findOne($id);
-        
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ctg'=>$ctg
@@ -63,18 +63,16 @@ class ForumController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Forum();
-        $categories=(new Category())->getAllCategories();
-        $forumsAmount=(new Category())->getCountAllCategories();
+        $ctg=Category::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'categories'=>$categories,
-                'forumsAmount'=>$forumsAmount
+                'ctg'=>$ctg
             ]);
         }
     }
@@ -87,7 +85,8 @@ class ForumController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Forum::find()->where(['id'=>$id])->with('category')->one();
+        $ctg=$model->category;
         $categories=(new Category())->getAllCategories();
         $forumsAmount=(new Category())->getCountAllCategories();
 
@@ -97,7 +96,8 @@ class ForumController extends Controller
             return $this->render('update', [
                 'model' => $model,
                 'categories'=>$categories,
-                'forumsAmount'=>$forumsAmount
+                'forumsAmount'=>$forumsAmount,
+                'ctg'=>$ctg
             ]);
         }
     }

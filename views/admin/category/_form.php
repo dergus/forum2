@@ -14,15 +14,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <?php 
-    $items=[];
-    if($model->isNewRecord){
-    $model->position=$model->countCategories+1;
-    $items=array_combine(range(1, $model->countCategories+1), range(1, $model->countCategories+1));
-    }else{
-        $items=array_combine(range(1, $model->countCategories), range(1, $model->countCategories));
-    }
+        $items=[];
+        if($model->isNewRecord){
+        $model->position=$model->countCategories+1;
+        $items=array_combine(range(1, $model->countCategories+1), range(1, $model->countCategories+1));
+        }else{
+            $items=array_combine(range(1, $model->countCategories), range(1, $model->countCategories));
+        }
     
-?>
+    ?>
 
     <?= $form->field($model, 'position')->dropDownList($items) ?>
 

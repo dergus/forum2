@@ -7,7 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Forum */
 
 $this->title = Yii::t('app', 'Create Forum');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Forums'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category/index']];
+$this->params['breadcrumbs'][]=['label'=>$ctg->title,'url'=>['admin/forum/index','id'=>$ctg->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="forum-create">
@@ -16,8 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'categories'=>$categories,
-        'forumsAmount'=>$forumsAmount
+        'ctg'=>$ctg
     ]) ?>
 
 </div>

@@ -113,20 +113,20 @@ class Category extends \yii\db\ActiveRecord
     
 
         public function beforeSave($insert) {
-     if (parent::beforeSave($insert)) {
-         if($this->isNewRecord){
+         if (parent::beforeSave($insert)) {
+             if($this->isNewRecord){
 
-         if($this->position<=$this->getCountCategories()){
-             
-             $this->updateAllCounters(["position"=>1], ['>=','position',  $this->position]);
-             
-         }}  else {
-                     $oldPosition=  $this->getOldAttribute('position');
-        if($this->position>$oldPosition){
-            $this->updateAllCounters(["position"=>-1], ['and',['>','position',$oldPosition],['<=','position',$this->position]]);
-        }elseif ($this->position<$oldPosition) {
-            $this->updateAllCounters(["position"=>1], ['and',['>=','position',  $this->position],['<','position',$oldPosition]]);
-            }
+             if($this->position<=$this->getCountCategories()){
+                 
+                 $this->updateAllCounters(["position"=>1], ['>=','position',  $this->position]);
+                 
+             }}  else {
+                         $oldPosition=  $this->getOldAttribute('position');
+            if($this->position>$oldPosition){
+                $this->updateAllCounters(["position"=>-1], ['and',['>','position',$oldPosition],['<=','position',$this->position]]);
+            }elseif ($this->position<$oldPosition) {
+                $this->updateAllCounters(["position"=>1], ['and',['>=','position',  $this->position],['<','position',$oldPosition]]);
+                }
     
 }
          return TRUE; 

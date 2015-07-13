@@ -37,7 +37,13 @@ AppAsset::register($this);
        
         if(Yii::$app->user->can("administrate")){
             
-            array_unshift($nav_items, ['label' => 'Administrate', 'url' => ['/admin/category']]);
+            array_unshift($nav_items, ['label' => 'Administrate', 'items'=>[
+
+                    ['label'=>"Forum",'url'=>['admin/category']],
+                    ['label'=>"Users",'url'=>['admin/user']]
+
+
+                ]]);
             
         }
         

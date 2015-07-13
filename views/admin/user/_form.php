@@ -12,7 +12,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput() ?>
+    <?= $form->field($model, 'name')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
     
     <label class="control-label" for="signupform-day">Birthdate</label>

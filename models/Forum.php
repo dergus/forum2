@@ -87,4 +87,38 @@ class Forum extends \yii\db\ActiveRecord
     public function getCount(){
         return $this->hasMany(Theme::className(), ['forum_id' => 'id'])->count();
     }
+
+    public function getCountForums(){
+        return $this->find()->count();
+    }
+
+
+
+
+        public function beforeSave($insert) {
+             if (parent::beforeSave($insert)) {
+                 if($this->isNewRecord){
+
+                 if($this->position<=$this->getCountForums){
+                     
+                     $this->updateAllCounters(["position"=>1], ['>=','position',  $this->position]);
+                     
+                 }}  else {
+                             $oldPosition=  $this->getOldAttribute('position');
+                if($this->position>$oldPosition){
+                    $this->updateAllCounters(["position"=>-1], ['and',['>','position',$oldPosition],['<=','position',$this->position]]);
+                }elseif ($this->position<$oldPosition) {
+                    $this->updateAllCounters(["position"=>1], ['and',['>=','position',  $this->position],['<','position',$oldPosition]]);
+                    }
+
+        }
+             return TRUE; 
+             
+        } else {
+
+                return FALSE;
+        }
+            
+            
+    }
 }

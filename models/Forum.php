@@ -99,7 +99,7 @@ class Forum extends \yii\db\ActiveRecord
              if (parent::beforeSave($insert)) {
                  if($this->isNewRecord){
 
-                 if($this->position<=$this->getCountForums){
+                 if($this->position<=$this->getCountForums()){
                      
                      $this->updateAllCounters(["position"=>1], ['>=','position',  $this->position]);
                      

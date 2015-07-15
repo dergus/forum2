@@ -22,6 +22,11 @@ use yii\behaviors\TimestampBehavior;
  */
 class Ban extends \yii\db\ActiveRecord
 {
+
+
+    public $days;
+    public $hours;
+    public $minutes;
     /**
      * @inheritdoc
      */
@@ -33,6 +38,8 @@ class Ban extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+
 
     public function behaviors()
     {
@@ -49,8 +56,9 @@ class Ban extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','reason','duration'],'required','on'=>'create'],
-            [['user_id', 'duration'], 'integer'],
+            [['user_id','reason','days','hours','minutes'],'required'],
+            [['user_id'], 'integer'],
+            [['days', 'hours', 'minutes'],'integer', 'max'=>1000],
             [['reason'], 'string'],
         ];
     }
@@ -85,5 +93,19 @@ class Ban extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
+    public function beforeSave($insert) 
+    {
+        if (parent::beforeSave($insert)) {
+            
+            $this->duration=$this->days*24*60+$this->hours*60+$this->minutes;
+
+            return true;
+        } else {
+            return TRUE;
+    }
+       
     }
 }

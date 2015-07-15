@@ -51,5 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
         ],
     ]) ?>
-
+<p>
+<?= Html::a('Manage Bans', ['ban/index', 'user_id' => $model->id], ['class' => 'btn btn-primary']) ?>
+</p>
 </div>

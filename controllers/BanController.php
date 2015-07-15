@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers\admin;
+namespace app\controllers;
 
 use Yii;
 use app\models\Ban;
@@ -8,6 +8,7 @@ use app\models\BanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * BanController implements the CRUD actions for Ban model.
@@ -30,14 +31,16 @@ class BanController extends Controller
      * Lists all Ban models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($user_id)
     {
-        $searchModel = new BanSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider ([
+                'query'=>Ban::find()->where(
+                    ['user_id'=>$user_id])
+            ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'user_id'=>$user_id
         ]);
     }
 
@@ -58,7 +61,7 @@ class BanController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($user_id)
     {
         $model = new Ban();
 
@@ -67,6 +70,7 @@ class BanController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'user_id'=>$user_id
             ]);
         }
     }

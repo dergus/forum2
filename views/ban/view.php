@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'reason:ntext',
             'created_at',
             'duration',
-            'active',
         ],
     ]) ?>
 

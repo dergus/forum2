@@ -56,12 +56,14 @@ class Ban extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','reason','days','hours','minutes'],'required'],
+            [['user_id','reason'],'required'],
             [['user_id'], 'integer'],
             [['days', 'hours', 'minutes'],'integer', 'max'=>1000],
             [['reason'], 'string'],
         ];
     }
+
+
 
     /**
      * @inheritdoc
@@ -101,6 +103,7 @@ class Ban extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             
             $this->duration=$this->days*24*60+$this->hours*60+$this->minutes;
+            $this->executor_id=\Yii::$app->user->id;
 
             return true;
         } else {

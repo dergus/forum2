@@ -97,6 +97,17 @@ class Ban extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    public function getDays(){
+        return floor($this->duration/(24*60));
+    }
+
+    public function getHours(){
+        return floor(($this->duration-$this->getDays()*24*60)/60);
+    }
+
+    public function getMinutes(){
+        return $this->duration-$this->getDays()*24*60-$this->getHours()*60;
+    }
 
     public function beforeSave($insert) 
     {

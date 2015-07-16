@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 	}
 	
 	if(!$model->isNewRecord){
-		$model->days=floor($model->duration/(24*60));
-		$model->hours=floor(($model->duration-$model->days*24*60)/60);
-		$model->minutes=$model->duration-$model->days*24*60-$model->hours*60;
+		$model->days=$model->getDays();
+		$model->hours=$model->getHours();
+		$model->minutes=$model->getMinutes();
 	}
 
 ?>

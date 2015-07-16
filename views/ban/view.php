@@ -33,7 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'executor_id',
             'reason:ntext',
             'created_at',
-            'duration',
+            [
+                'attribute'=>'duration',
+                'value'=>$model->getDays()." days ".$model->getHours()." hours ".$model->getMinutes()." minutes"
+                    
+                
+            ]
         ],
     ]) ?>
 

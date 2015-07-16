@@ -7,7 +7,9 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Ban */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bans'), 'url' => ['index']];
+$this->params['breadcrumbs'][]=['label'=>'Users','url'=>['admin/user/index']];
+$this->params['breadcrumbs'][]=['label'=>$model->user->name,'url'=>['admin/user/view','id'=>$model->user->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bans'), 'url' => ['index','user_id'=>$model->user_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ban-view">

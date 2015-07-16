@@ -7,6 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Ban */
 
 $this->title = Yii::t('app', 'Create Ban');
+$this->params['breadcrumbs'][]=['label'=>'Users','url'=>['admin/user/index']];
+$this->params['breadcrumbs'][]=['label'=>$model->user->name,'url'=>['admin/user/view','id'=>$model->user->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bans'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

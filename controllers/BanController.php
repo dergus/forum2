@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use app\models\User;
 
 /**
  * BanController implements the CRUD actions for Ban model.
@@ -37,10 +38,16 @@ class BanController extends Controller
                 'query'=>Ban::find()->where(
                     ['user_id'=>$user_id])
             ]);
+        $user=User::find()->where([
+
+            'id'=>$user_id
+
+            ])->one();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'user_id'=>$user_id
+            'user_id'=>$user_id,
+            'user'=>$user
         ]);
     }
 
@@ -116,7 +123,7 @@ class BanController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Ban::findOne($id)) !== null) {
+        if (($model = Ban::find()->where(['id'=>$id])->with('user')->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

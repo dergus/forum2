@@ -8,7 +8,10 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Bans');
+$this->params['breadcrumbs'][]=['label'=>'Users','url'=>['admin/user/index']];
+$this->params['breadcrumbs'][]=['label'=>$user->name,'url'=>['admin/user/view','id'=>$user->id]];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="ban-index">
 

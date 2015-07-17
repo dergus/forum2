@@ -7,6 +7,7 @@ use app\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -14,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class UserController extends Controller
 {
+
     public function behaviors()
     {
         return [
@@ -23,6 +25,15 @@ class UserController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['administrate'],
+                    ],
+                ],
+        ],
         ];
     }
 
@@ -81,7 +92,11 @@ class UserController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
+    {   
+        if (!\Yii::$app->user->can('updateUser',['object'=>$id])) {
+        throw new ForbiddenHttpException('Access denied');
+        }
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -101,6 +116,10 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!\Yii::$app->user->can('updateUser',['object'=>$id])) {
+        throw new ForbiddenHttpException('Access denied');
+        }
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

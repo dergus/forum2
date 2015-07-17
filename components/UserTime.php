@@ -24,7 +24,8 @@ class UserTime extends Component{
             $user->save();
             
         }
-        
+       
+       return true; 
         
     }
     

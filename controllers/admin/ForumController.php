@@ -23,6 +23,15 @@ class ForumController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['administrate'],
+                    ],
+                ],
+        ],
         ];
     }
 

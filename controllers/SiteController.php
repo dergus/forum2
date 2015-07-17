@@ -7,6 +7,8 @@ use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\User;
+use app\models\Category;
+use yii\data\ActiveDataProvider;
 use Yii;
 use yii\authclient\ClientInterface;
 use yii\base\InvalidParamException;
@@ -74,63 +76,21 @@ class SiteController extends Controller
     /**
      * @param ClientInterface $client
      */
-    public function onAuthSuccess($client)
+
+    public function actionIndex()
     {
-        $attributes = $client->getUserAttributes();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Category::find()->with(['forums'=>  function($q)
+            {
+                $q->orderBy('position ASC');
+            }])->limit(5),
+        ]);
 
-        /** @var Auth $auth */
-        $auth = Auth::find()->where([
-            'source' => $client->getId(),
-            'source_id' => $attributes['id'],
-        ])->one();
-
-        if (Yii::$app->user->isGuest) {
-            if ($auth) { // login
-                $user = $auth->user;
-                Yii::$app->user->login($user, 3600 * 24 * 30);
-            } else { // signup
-              
-                    $password = Yii::$app->security->generateRandomString(6);
-                    $user = new User([
-                        'name' => $attributes['screen_name'],
-                   //     'email' => $email,
-                        'password' => $password,
-                    ]);
-                    $user->generateAuthKey();
-                    $user->generatePasswordResetToken();
-
-                    $transaction = $user->getDb()->beginTransaction();
-
-                    if ($user->save()) {
-                        $auth = new Auth([
-                            'user_id' => $user->id,
-                            'source' => $client->getId(),
-                            'source_id' => (string)$attributes['id'],
-                        ]);
-                        if ($auth->save()) {
-                            $transaction->commit();
-                            Yii::$app->user->login($user, 3600 * 24 * 30);
-                        } else {
-                            print_r($auth->getErrors());
-                            die();
-                        }
-                    } else {
-                        print_r($user->getErrors());
-                        die();
-                    }
-                
-            }
-        } else { // user already logged in
-            if (!$auth) { // add auth provider
-                $auth = new Auth([
-                    'user_id' => Yii::$app->user->id,
-                    'source' => $client->getId(),
-                    'source_id' => $attributes['id'],
-                ]);
-                $auth->save();
-            }
-        }
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
+
 
     public function actionLogin()
     {
@@ -211,5 +171,63 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function onAuthSuccess($client)
+    {
+        $attributes = $client->getUserAttributes();
+
+        /** @var Auth $auth */
+        $auth = Auth::find()->where([
+            'source' => $client->getId(),
+            'source_id' => $attributes['id'],
+        ])->one();
+
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // login
+                $user = $auth->user;
+                Yii::$app->user->login($user, 3600 * 24 * 30);
+            } else { // signup
+              
+                    $password = Yii::$app->security->generateRandomString(6);
+                    $user = new User([
+                        'name' => $attributes['screen_name'],
+                   //     'email' => $email,
+                        'password' => $password,
+                    ]);
+                    $user->generateAuthKey();
+                    $user->generatePasswordResetToken();
+
+                    $transaction = $user->getDb()->beginTransaction();
+
+                    if ($user->save()) {
+                        $auth = new Auth([
+                            'user_id' => $user->id,
+                            'source' => $client->getId(),
+                            'source_id' => (string)$attributes['id'],
+                        ]);
+                        if ($auth->save()) {
+                            $transaction->commit();
+                            Yii::$app->user->login($user, 3600 * 24 * 30);
+                        } else {
+                            print_r($auth->getErrors());
+                            die();
+                        }
+                    } else {
+                        print_r($user->getErrors());
+                        die();
+                    }
+                
+            }
+        } else { // user already logged in
+            if (!$auth) { // add auth provider
+                $auth = new Auth([
+                    'user_id' => Yii::$app->user->id,
+                    'source' => $client->getId(),
+                    'source_id' => $attributes['id'],
+                ]);
+                $auth->save();
+            }
+        }
     }
 }

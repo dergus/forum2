@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class ThemeController extends Controller
 {
+
     public function behaviors()
     {
         return [
@@ -24,6 +25,15 @@ class ThemeController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['administrate'],
+                    ],
+                ],
+        ],
         ];
     }
 

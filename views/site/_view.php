@@ -6,7 +6,7 @@
         <div class="row">
         <?php foreach ($model->forums as $forum):?>
         
-            <tr><td class="col-sm-10"><?=Html::a($forum->title,['forum/view','id'=>$forum->id]);?><div class="text-muted"><?= $forum->description?></div></td><td class="col-sm-2"><?=$forum->count?> Theme</td></tr>
+            <tr><td class="col-sm-10"><?=Html::a($forum->title,['forum/index','id'=>$forum->id]);?><div class="text-muted"><?= $forum->description?></div></td><td class="col-sm-2"><?=$forum->count?> Theme</td></tr>
         <?php endforeach;?>
         </div>
     </table>

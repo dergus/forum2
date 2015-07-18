@@ -7,11 +7,11 @@ use yii\widgets\ListView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Categories');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $dataProvider->getModels()[0]->category->title;
 ?>
-<div class="category-index">
 
-    
+<div style="margin-bottom: 50px"></div>
+<div class="category-index">
 
     <div class="row">
         <div class="col-xs-10  col-md-10 col-md-offset-1">

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-xs-12">
     <table class="table">
-        <tr style="background: #3aab81"> <th colspan="3"><?=Html::a($model->title,['category/view','id'=>$model->id],['style'=>"color:black"]);?></th></tr>
+        <tr style="background: #3aab81"> <th colspan="3"><?=Html::a($model->title,['category/index','id'=>$model->id],['style'=>"color:black"]);?></th></tr>
         <div class="row">
         <?php foreach ($model->forums as $forum):?>
         

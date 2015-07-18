@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Category;
+use app\models\Forum;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,13 +31,10 @@ class CategoryController extends Controller
      * Lists all Category models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find()->with(['forums'=>  function($q)
-            {
-                $q->orderBy('position ASC');
-            }])->limit(5),
+            'query' => Forum::find()->where(['category_id'=>$id])->with(['category'])->orderBy('position ASC')
         ]);
 
         return $this->render('index', [

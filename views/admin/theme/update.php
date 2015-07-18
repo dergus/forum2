@@ -9,8 +9,8 @@ $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Theme',
 ]) . ' ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category/index']];
-$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['admin/forum/index','id'=>$forum->category->id]];
-$this->params['breadcrumbs'][] = ['label'=>$forum->title,'url'=>['admin/theme/index','id'=>$forum->id]];
+$this->params['breadcrumbs'][] = ['label'=>$model->forum->category->title,'url'=>['admin/forum/index','id'=>$model->forum->category->id]];
+$this->params['breadcrumbs'][] = ['label'=>$model->forum->title,'url'=>['admin/theme/index','id'=>$model->forum->id]];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>

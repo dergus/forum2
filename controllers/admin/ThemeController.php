@@ -47,7 +47,7 @@ class ThemeController extends Controller
             'query' => Theme::find()->where(['forum_id'=>$id]),
         ]);
 
-        $forum=Forum::find($id)->with(['category'])->one();
+        $forum=Forum::find()->where(['id'=>$id])->with(['category'])->one();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -62,11 +62,8 @@ class ThemeController extends Controller
      */
     public function actionView($id)
     {   
-        $forum=Forum::find($id)->with(['category'])->one();
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'forum'=>$forum,
         ]);
     }
 
@@ -78,7 +75,7 @@ class ThemeController extends Controller
     public function actionCreate($id)
     {
         $model = new Theme();
-        $forum=Forum::find($id)->with(['category'])->one();
+        $forum=Forum::find()->where(['id'=>$id])->with(['category'])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -99,15 +96,12 @@ class ThemeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $forum=Forum::find($id)->with(['category'])->one();
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'forum'=>$forum,
             ]);
         }
     }
@@ -134,7 +128,7 @@ class ThemeController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Theme::findOne($id)) !== null) {
+        if (($model = Theme::find()->where(['id'=>$id])->with(['forum','forum.category'])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

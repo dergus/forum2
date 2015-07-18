@@ -6,17 +6,17 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-$this->title = Yii::t('app', 'Forums');
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/category',]];
-$this->params['breadcrumbs'][] = $ctg->title;
+$this->title = Yii::t('app', 'Themes');
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin/index']];
+$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['admin/category/index','id'=>$forum->category->id]];
+$this->params['breadcrumbs'][] = $forum->title;
 ?>
-<div class="forum-index">
+<div class="theme-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Forum'), ['create','id'=>$ctg->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Theme'), ['create','id'=>$forum->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,20 +25,14 @@ $this->params['breadcrumbs'][] = $ctg->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'category_id',
-            ['attribute'=>'title',
-             'content'=>  function ($model){
-                 return Html::a($model->title, ['admin/theme/index','id'=>$model->id]);
-             }
-             ],
-            'position',
-            'description',
-             ['attribute'=>'locked',
-             'value'=>  function ($model){
-                 return $model->locked==0?"locked":"not locked";
-             }
-                
-                
+            'forum_id',
+            'title',
+            'user_id',
+            ['attribute'=>'locked',
+             'value'=>function($model){ return $model->locked==0?'locked':'not locked';}
+            ],
+            ['attribute'=>'fixed',
+             'value'=>function($model){  return $model->fixed==0? 'fixed': 'not fixed';}
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

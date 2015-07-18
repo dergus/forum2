@@ -39,7 +39,7 @@ AppAsset::register($this);
             
             array_unshift($nav_items, ['label' => 'Administrate', 'items'=>[
 
-                    ['label'=>"Forum",'url'=>['admin/category']],
+                    ['label'=>"Forum",'url'=>['admin/admin']],
                     ['label'=>"Users",'url'=>['admin/user']]
 
 

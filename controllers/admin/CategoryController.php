@@ -3,14 +3,14 @@
 namespace app\controllers\admin;
 
 use Yii;
-use app\models\Category;
+use app\models\Forum;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\models\Category;
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * ForumController implements the CRUD actions for Forum model.
  */
 class CategoryController extends Controller
 {
@@ -35,74 +35,84 @@ class CategoryController extends Controller
         ];
     }
 
-    
-    
     /**
-     * Lists all Category models.
+     * Lists all Forum models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex($id)
+    {   
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => Forum::find()->where(['category_id'=>$id]),
         ]);
+        
+        $ctg=Category::findOne($id);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'ctg'=>$ctg
+            
         ]);
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single Forum model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
+            
         ]);
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new Forum model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Category();
-
+        $model = new Forum();
+        $ctg=Category::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'ctg'=>$ctg
             ]);
         }
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing Forum model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = Forum::find()->where(['id'=>$id])->with('category')->one();
+        $ctg=$model->category;
+        $categories=(new Category())->getAllCategories();
+        $forumsAmount=(new Category())->getCountAllCategories();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'categories'=>$categories,
+                'forumsAmount'=>$forumsAmount,
+                'ctg'=>$ctg
             ]);
         }
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing Forum model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -115,15 +125,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the Forum model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return Forum the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Forum::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

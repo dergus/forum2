@@ -4,13 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\models\Forum */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin',]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', $model->category->title), 'url' => ['index','id'=>$model->category_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-view">
+<div class="forum-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,9 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title',
+            'category_id',
             'position',
+            'title',
+            'description',
             'created_at',
+            ['attribute'=>'locked',
+             'value'=>$model->locked==0?"locked":"not locked"
+                
+                
+            ]
         ],
     ]) ?>
 

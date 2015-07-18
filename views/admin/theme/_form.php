@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 if($model->isNewRecord){
 $model->locked=1;
 $model->fixed=1;
-$model->forum_id=$id;}
+$model->forum_id=$forum->id;}
 
 ?>
 

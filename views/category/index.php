@@ -7,7 +7,7 @@ use yii\widgets\ListView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Categories');
-$this->params['breadcrumbs'][] = $dataProvider->getModels()[0]->category->title;
+$this->params['breadcrumbs'][] = $category->title;
 ?>
 
 <div style="margin-bottom: 50px"></div>

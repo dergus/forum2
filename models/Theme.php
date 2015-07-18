@@ -84,12 +84,29 @@ class Theme extends \yii\db\ActiveRecord
         return $this->hasMany(Message::className(), ['theme_id' => 'id']);
     }
 
+    public function getLastMessage()
+    {
+        return $this->hasOne(Message::className(), ['theme_id' => 'id'])->orderBy('created_at DESC');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getForum()
     {
         return $this->hasOne(Forum::className(), ['id' => 'forum_id']);
+    }
+
+    public function getCount(){
+
+        return $this->hasMany(Message::className(), ['theme_id' => 'id'])->count();
+
+    }
+
+    public function getAuthor(){
+
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+
     }
     
     public function beforeSave($insert) {

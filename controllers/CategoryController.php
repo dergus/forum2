@@ -32,13 +32,14 @@ class CategoryController extends Controller
      * @return mixed
      */
     public function actionIndex($id)
-    {
+    {   $category=Category::findOne($id);
         $dataProvider = new ActiveDataProvider([
             'query' => Forum::find()->where(['category_id'=>$id])->with(['category'])->orderBy('position ASC')
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'category'=>$category
         ]);
     }
 

@@ -8,23 +8,45 @@ use yii\widgets\ListView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Forums');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['category/index','id'=>$forum->category->id]];
+$this->params['breadcrumbs'][] = $forum->title;
 ?>
 <div class="forum-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Forum'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Theme'), ['theme/create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+<?php if($fixedThemes->totalCount!==0): ?>
+<div class="row">
+    <div class="col-xs-12">
+    <table class="table">
+        <tr style="background: #3aab81"> <th >Themes</th><th >Messages</th><th nowrap>Last Message</th></tr>
     <?= ListView::widget([
-        'dataProvider' => $dataProvider,
+        'dataProvider' => $fixedThemes,
         'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->title), ['view', 'id' => $model->id]);
-        },
+        'showOnEmpty' => [false],
+        'itemView' => '_view.php'
     ]) ?>
+    </table>
+    </div>
+</div>
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-xs-12">
+    <table class="table">
+        <tr style="background: #3aab81"> <th >Themes</th><th >Messages</th><th nowrap>Last Message</th></tr>
+    
+    <?= ListView::widget([
+        'dataProvider' => $themes,
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => '_view.php'
+    ]) ?> 
+
+    </table>
+    </div>
+</div>   
 
 </div>

@@ -5,7 +5,6 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\Theme;
 use app\models\Forum;
-use app\models\Category;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * ThemeController implements the CRUD actions for Theme model.
  */
-class ForumController extends Controller
+class ThemeController extends Controller
 {
 
     public function behaviors()
@@ -38,86 +37,60 @@ class ForumController extends Controller
         ];
     }
 
-    /**
-     * Lists all Theme models.
-     * @return mixed
-     */
-    public function actionIndex($id)
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Theme::find()->where(['forum_id'=>$id]),
-        ]);
-
-        $forum=Forum::find()->where(['id'=>$id])->with(['category'])->one();
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'forum'=>$forum,
-        ]);
-    }
-
 
     /**
-     * Displays a single Forum model.
+     * Displays a single Theme model.
      * @param integer $id
      * @return mixed
      */
-    
-
     public function actionView($id)
     {   
         return $this->render('view', [
-            'model' => $this->findModel($id)
-            
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Forum model.
+     * Creates a new Theme model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate($id)
     {
-        $model = new Forum();
-        $ctg=Category::findOne($id);
+        $model = new Theme();
+        $forum=Forum::find()->where(['id'=>$id])->with(['category'])->one();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'ctg'=>$ctg
+                'forum'=>$forum,
             ]);
         }
     }
 
     /**
-     * Updates an existing Forum model.
+     * Updates an existing Theme model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $model = Forum::find()->where(['id'=>$id])->with('category')->one();
-        $ctg=$model->category;
-        $categories=(new Category())->getAllCategories();
-        $forumsAmount=(new Category())->getCountAllCategories();
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'categories'=>$categories,
-                'forumsAmount'=>$forumsAmount,
-                'ctg'=>$ctg
             ]);
         }
     }
 
     /**
-     * Deletes an existing Forum model.
+     * Deletes an existing Theme model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,20 +103,18 @@ class ForumController extends Controller
     }
 
     /**
-     * Finds the Forum model based on its primary key value.
+     * Finds the Theme model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Forum the loaded model
+     * @return Theme the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Forum::findOne($id)) !== null) {
+        if (($model = Theme::find()->where(['id'=>$id])->with(['forum','forum.category'])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-    
 }

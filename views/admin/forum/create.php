@@ -4,21 +4,20 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Theme */
+/* @var $model app\models\Forum */
 
-$this->title = Yii::t('app', 'Create Theme');
+$this->title = Yii::t('app', 'Create Forum');
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin/index']];
-$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['admin/category/index','id'=>$forum->category->id]];
-$this->params['breadcrumbs'][] = ['label'=>$forum->title,'url'=>['admin/forum/index','id'=>$forum->id]];
+$this->params['breadcrumbs'][]=['label'=>$ctg->title,'url'=>['admin/category/index','id'=>$ctg->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="theme-create">
+<div class="forum-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'forum'=>$forum
+        'ctg'=>$ctg
     ]) ?>
 
 </div>

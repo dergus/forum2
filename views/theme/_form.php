@@ -4,28 +4,29 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\models\Theme */
 /* @var $form yii\widgets\ActiveForm */
+if($model->isNewRecord){
+$model->locked=1;
+$model->fixed=1;
+$model->forum_id=$forum->id;}
+
 ?>
 
-<div class="category-form">
+
+<div class="theme-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'forum_id')->hiddenInput()->label(FALSE) ?>
+
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <?php 
-        $items=[];
-        if($model->isNewRecord){
-        $model->position=$model->countCategories+1;
-        $items=array_combine(range(1, $model->countCategories+1), range(1, $model->countCategories+1));
-        }else{
-            $items=array_combine(range(1, $model->countCategories), range(1, $model->countCategories));
-        }
-    
-    ?>
 
-    <?= $form->field($model, 'position')->dropDownList($items) ?>
+    <?php if($model->isNewRecord) echo $form->field($model, 'text')->textarea(['rows' => 6]); ?>
 
+    <?= $form->field($model, 'locked')->dropDownList([0=>'locked',1=>'not locked']) ?>
+
+    <?= $form->field($model, 'fixed')->dropDownList([0=>'fixed',1=>'not fixed']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

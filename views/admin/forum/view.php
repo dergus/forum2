@@ -4,15 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Theme */
+/* @var $model app\models\Forum */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin/index']];
-$this->params['breadcrumbs'][] = ['label'=>$model->forum->category->title,'url'=>['admin/category/index','id'=>$model->forum->category->id]];
-$this->params['breadcrumbs'][] = ['label'=>$model->forum->title,'url'=>['admin/forum/index','id'=>$model->forum->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin',]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', $model->category->title), 'url' => ['admin/category/index','id'=>$model->category_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="theme-view">
+<div class="forum-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,16 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'forum_id',
+            'category_id',
+            'position',
             'title',
-            'user_id',
+            'description',
             'created_at',
-            'updated_at',
             ['attribute'=>'locked',
-             'value'=>$model->locked==0?'locked':'not locked'
-            ],
-            ['attribute'=>'fixed',
-             'value'=>$model->fixed==0?'fixed':'not fixed'
+             'value'=>$model->locked==0?"locked":"not locked"
+                
+                
             ]
         ],
     ]) ?>

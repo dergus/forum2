@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\models\Theme */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['admin/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Themes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-view">
+<div class="theme-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,8 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'position',
+            'locked',
+            'fixed',
+            'forum_id',
             'created_at',
+            'updated_at',
+            'user_id',
         ],
     ]) ?>
 

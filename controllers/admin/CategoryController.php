@@ -55,64 +55,56 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a single Forum model.
+     * Displays a single Category model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         return $this->render('view', [
-            'model' => $this->findModel($id)
-            
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Forum model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate()
     {
-        $model = new Forum();
-        $ctg=Category::findOne($id);
+        $model = new Category();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'ctg'=>$ctg
             ]);
         }
     }
 
     /**
-     * Updates an existing Forum model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $model = Forum::find()->where(['id'=>$id])->with('category')->one();
-        $ctg=$model->category;
-        $categories=(new Category())->getAllCategories();
-        $forumsAmount=(new Category())->getCountAllCategories();
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'categories'=>$categories,
-                'forumsAmount'=>$forumsAmount,
-                'ctg'=>$ctg
             ]);
         }
     }
 
     /**
-     * Deletes an existing Forum model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,15 +117,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds the Forum model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Forum the loaded model
+     * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Forum::findOne($id)) !== null) {
+        if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

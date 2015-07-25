@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $forum->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Theme'), ['create','id'=>$forum->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Theme'), ['admin/theme/create','id'=>$forum->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -35,7 +35,10 @@ $this->params['breadcrumbs'][] = $forum->title;
              'value'=>function($model){  return $model->fixed==0? 'fixed': 'not fixed';}
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+             'header'=>"Actions" ,
+             'controller'=>'admin/theme' 
+            ],
         ],
     ]); ?>
 

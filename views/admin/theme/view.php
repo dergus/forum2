@@ -4,13 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\models\Theme */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['admin/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin/index']];
+$this->params['breadcrumbs'][] = ['label'=>$model->forum->category->title,'url'=>['admin/category/index','id'=>$model->forum->category->id]];
+$this->params['breadcrumbs'][] = ['label'=>$model->forum->title,'url'=>['admin/forum/index','id'=>$model->forum->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-view">
+<div class="theme-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,9 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'forum_id',
             'title',
-            'position',
+            'user_id',
             'created_at',
+            'updated_at',
+            ['attribute'=>'locked',
+             'value'=>$model->locked==0?'locked':'not locked'
+            ],
+            ['attribute'=>'fixed',
+             'value'=>$model->fixed==0?'fixed':'not fixed'
+            ]
         ],
     ]) ?>
 

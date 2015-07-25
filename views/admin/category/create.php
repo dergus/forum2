@@ -4,20 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Forum */
+/* @var $model app\models\Category */
 
-$this->title = Yii::t('app', 'Create Forum');
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['admin/admin/index']];
-$this->params['breadcrumbs'][]=['label'=>$ctg->title,'url'=>['admin/category/index','id'=>$ctg->id]];
+$this->title = Yii::t('app', 'Create Category');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="forum-create">
+<div class="category-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'ctg'=>$ctg
     ]) ?>
 
 </div>

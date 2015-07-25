@@ -7,7 +7,7 @@ use yii\widgets\ListView;
 /* @var $searchModel app\models\search\ForumSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Forums');
+$this->title = Yii::t('app', 'Themes');
 $this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['category/index','id'=>$forum->category->id]];
 $this->params['breadcrumbs'][] = $forum->title;
 ?>
@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $forum->title;
 </div>
 <?php endif; ?>
 
+<?php if($themes->totalCount!==0): ?>
 <div class="row">
     <div class="col-xs-12">
     <table class="table">
@@ -42,11 +43,15 @@ $this->params['breadcrumbs'][] = $forum->title;
     <?= ListView::widget([
         'dataProvider' => $themes,
         'itemOptions' => ['class' => 'item'],
-        'itemView' => '_view.php'
+        'itemView' => '_view.php',
+        'showOnEmpty' => [false],
     ]) ?> 
 
     </table>
     </div>
-</div>   
+</div> 
+<?php else: ?> 
+<b>No themes yet.</b>
+<?php endif;?> 
 
 </div>

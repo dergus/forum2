@@ -15,9 +15,14 @@ $this->params['breadcrumbs'][] = $forum->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(!\Yii::$app->user->isGuest): ?>
+
     <p>
         <?= Html::a(Yii::t('app', 'Create Theme'), ['theme/create','id'=>$forum->id], ['class' => 'btn btn-success']) ?>
     </p>
+
+<?php endif; ?>
+
 <?php if($fixedThemes->totalCount!==0): ?>
 <div class="row">
     <div class="col-xs-12">

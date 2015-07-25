@@ -24,9 +24,9 @@ $model->forum_id=$forum->id;}
 
     <?php if($model->isNewRecord) echo $form->field($model, 'text')->textarea(['rows' => 6]); ?>
 
-    <?= $form->field($model, 'locked')->dropDownList([0=>'locked',1=>'not locked']) ?>
+    <?php if(\Yii::$app->user->can('moderator')) echo $form->field($model, 'locked')->dropDownList([0=>'locked',1=>'not locked']);?>
 
-    <?= $form->field($model, 'fixed')->dropDownList([0=>'fixed',1=>'not fixed']) ?>
+    <?php if(\Yii::$app->user->can('moderator')) echo $form->field($model, 'fixed')->dropDownList([0=>'fixed',1=>'not fixed']);?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

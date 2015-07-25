@@ -7,9 +7,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Theme */
 
 $this->title = Yii::t('app', 'Create Theme');
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['category/index']];
-$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['forum/index','id'=>$forum->category->id]];
-$this->params['breadcrumbs'][] = ['label'=>$forum->title,'url'=>['theme/index','id'=>$forum->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['site/index']];
+$this->params['breadcrumbs'][] = ['label'=>$forum->category->title,'url'=>['category/index','id'=>$forum->category->id]];
+$this->params['breadcrumbs'][] = ['label'=>$forum->title,'url'=>['forum/index','id'=>$forum->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="theme-create">

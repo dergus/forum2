@@ -8,6 +8,7 @@ use app\models\search\ThemeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Forum;
 
 /**
  * ThemeController implements the CRUD actions for Theme model.
@@ -66,7 +67,7 @@ class ThemeController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'id'=>$id
+                'forum'=>Forum::find()->where(['id'=>$id])->with(['category'])->one()
             ]);
         }
     }

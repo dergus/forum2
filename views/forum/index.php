@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $forum->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Theme'), ['theme/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Theme'), ['theme/create','id'=>$forum->id], ['class' => 'btn btn-success']) ?>
     </p>
 <?php if($fixedThemes->totalCount!==0): ?>
 <div class="row">

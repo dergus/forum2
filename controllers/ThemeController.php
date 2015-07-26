@@ -62,7 +62,12 @@ class ThemeController extends Controller
     {
         $model = new Theme();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if(!\Yii::$app->user->can('moderator')){
+                $model->fixed=1;
+                $model->locked=1;
+            }
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

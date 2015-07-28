@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Forum;
+use app\models\Message;
+use yii\data\ActiveDataProvider;
 
 /**
  * ThemeController implements the CRUD actions for Theme model.
@@ -31,13 +33,14 @@ class ThemeController extends Controller
      * Lists all Theme models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex($id)
+    {   
+        $messages =new ActiveDataProvider([
+            'query' => Message::find()->where(['theme_id'=>$id])->with('author')->orderBy('created_at ASC')
+        ]); 
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'messages'=>$messages
         ]);
     }
 

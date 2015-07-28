@@ -1,0 +1,33 @@
+.message{
+
+}
+
+.head{
+	border-bottom: 1px solid #389e5a;
+}
+
+.author{
+	float: left;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.time{
+	float: right;
+	padding: 3px;
+}
+.clearfix{
+	clear: both;
+}
+
+.body{
+	padding: 5px;
+}
+
+.reply-ctn{
+	margin: 3px;
+}
+.reply{
+float: right;
+padding: 2px;
+}
